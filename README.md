@@ -47,12 +47,12 @@ axios.post('https://api.monday.com/v2', { query }, {
 ## 3. Update Monday Board from SAP FI Module — Workflow
 
 ### 3.1 Fetch Monday Board ID by FI Project ID
-Maintain a mapping board (example board ID: `8449913235`) that maps SAP FI Project IDs to Monday board IDs.
+Maintain a mapping board (example board ID: `8447894565`) that maps SAP FI Project IDs to Monday board IDs.
 
 GraphQL request:
 ```graphql
 query {
-  boards(ids: 8449913235) {
+  boards(ids: 8444876125) {
     items_page(query_params: { rules: [
       { column_id: "text_mkphw6sd", compare_value: ["FI Project ID"] }
     ] }) {
@@ -74,7 +74,7 @@ Sample relevant response excerpt:
 ```json
 {
   "column_values": [
-    { "column": { "id": "text_mkphe2nw", "title": "monday board ID" }, "value": "\"8813971050\"" },
+    { "column": { "id": "text_mkphe2nw", "title": "monday board ID" }, "value": "\"8813794512\"" },
     { "column": { "id": "text_mkphw6sd", "title": "Sap Project ID" }, "value": "\"123\"" }
   ]
 }
@@ -110,8 +110,8 @@ Mutation to change multiple columns (use numeric values without quotes for numbe
 ```graphql
 mutation {
   change_multiple_column_values(
-    board_id: 7388692471,
-    item_id: 7388693067,
+    board_id: 7388543125,
+    item_id: 7388612345,
     column_values: "{\"name\":\"wbs name\",\"numbers9__1\":111,\"numeric8__1\":50,\"numeric5__1\":5}"
   ) {
     id
@@ -130,10 +130,10 @@ Create one or several items in a single mutation:
 
 ```graphql
 mutation {
-  create_item1: create_item(board_id: 7388692471, item_name: "שם סעיף תקציבי 1", column_values: "{\"wbs__1\":\"200000011\",\"numbers9__1\":111,\"numeric8__1\":50,\"numeric5__1\":5}") {
+  create_item1: create_item(board_id: 7388798456, item_name: "שם סעיף תקציבי 1", column_values: "{\"wbs__1\":\"200000011\",\"numbers9__1\":111,\"numeric8__1\":50,\"numeric5__1\":5}") {
     id
   }
-  create_item2: create_item(board_id: 7388692471, item_name: "שם סעיף תקציבי 2", column_values: "{\"wbs__1\":\"200000022\",\"numbers9__1\":222,\"numeric8__1\":44,\"numeric5__1\":2}") {
+  create_item2: create_item(board_id: 7388798456, item_name: "שם סעיף תקציבי 2", column_values: "{\"wbs__1\":\"200000022\",\"numbers9__1\":222,\"numeric8__1\":44,\"numeric5__1\":2}") {
     id
   }
 }
@@ -167,7 +167,7 @@ Example HTTP action settings (use secure storage for token, e.g., Power Automate
   - Content-Type: application/json
 - Body (fetch board ID by FI Project ID):
 ```json
-{ "query": "query { boards(ids: 8449913235) { items_page(query_params: {rules: [{column_id: \"text_mkphw6sd\", compare_value: [\"123\"]}]}) { items { id name column_values { column { id title } value } } } } }" }
+{ "query": "query { boards(ids: 7388798456) { items_page(query_params: {rules: [{column_id: \"text_mkphw6sd\", compare_value: [\"123\"]}]}) { items { id name column_values { column { id title } value } } } } }" }
 ```
 
 Parse JSON schema: use a sample Monday response (items array) to generate schema.
